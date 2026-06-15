@@ -1,10 +1,6 @@
 # Atlas People Context Uploader
 
-A small full-stack feature for uploading organisational context documents. A user
-drops in a plain-text or Markdown file; the backend stores it in Cloudflare R2,
-asks Claude Haiku to infer metadata (title, time period, what it refers to, a
-summary, key topics), and the UI shows every document with its metadata for the
-user to review and correct.
+A small full-stack feature for uploading organisational context documents. A user drops in a plain-text or Markdown file; the backend stores it in Cloudflare R2, asks Claude Haiku to infer metadata (title, time period, what it refers to, a summary, key topics), and the UI shows every document with its metadata for the user to review and correct.
 
 ## What it does
 
@@ -43,7 +39,7 @@ uvicorn main:app --reload --port 8000
 ```bash
 cd frontend
 npm install
-npm run dev        # http://localhost:3000, proxies /api → localhost:8000
+npm run dev # http://localhost:3000, proxies /api -> localhost:8000
 ```
 
 ## Configuration
@@ -75,9 +71,7 @@ terraform init && terraform apply
 cd backend && pytest -q
 ```
 
-The tests mock R2 and Anthropic via FastAPI dependency overrides, so they need no
-real credentials or network access. CI (`.github/workflows/ci.yml`) runs them and
-validates both Docker images build.
+The tests mock R2 and Anthropic via FastAPI dependency overrides, so they need no real credentials or network access. CI (`.github/workflows/ci.yml`) runs them and validates both Docker images build.
 
 ## Layout
 
@@ -87,14 +81,7 @@ frontend/   React + Vite + Tailwind — App, components/{Dropzone,MetadataForm},
 infra/      Terraform for the R2 bucket
 ```
 
-## Notes & trade-offs
+## Notes
 
-- **Storage:** each document is two R2 objects — `content/<id>` (text) and
-  `metadata/<id>.json` (metadata). Listing reads the metadata objects. This keeps
-  the stack to a single storage provider with no database; at larger scale the
-  metadata would move to an indexed store (e.g. D1/Postgres) so listing isn't N+1
-  reads.
-- **Model:** `claude-haiku-4-5` with structured outputs — the brief suggested an
-  older Haiku snapshot that is now retired, and structured outputs remove the need
-  to defensively parse free-form JSON.
-- **Auth:** out of scope for this exercise — there is no user/tenant model.
+- **Storage:** each document is two R2 objects — `content/<id>` (text) and `metadata/<id>.json` (metadata). Listing reads the metadata objects. This keeps the stack to a single storage provider with no database; at larger scale the metadata would move to an indexed store (e.g. D1/Postgres) so listing isn't N+1 reads.
+- **Deployment:** both services are already containerized (`backend/Dockerfile`, `frontend/Dockerfile`), so each can be extracted and run as a managed container app — e g. **Cloudflare Containers**. The backend needs its environment variables (Anthropic + R2 credentials, `CORS_ORIGINS`); the frontend is a static nginx image that proxies `/api` to the backend, so point that proxy at the backend's deployed URL.
