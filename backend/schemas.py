@@ -20,7 +20,7 @@ class InferredMetadata(BaseModel):
         description="Category, e.g. 'Company Strategy', 'Team Objectives', 'Job Profile'."
     )
     time_period: str = Field(
-        description="Time period the document covers, e.g. 'Q1 2024' or 'Not specified'."
+        description="Time period the document covers, e.g. 'Q1 2026' or 'Not specified'."
     )
     refers_to: list[str] = Field(
         default_factory=list,

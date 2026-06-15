@@ -7,10 +7,10 @@ from schemas import InferredMetadata
 from services.llm_service import LLMServiceError
 
 SAMPLE_METADATA = InferredMetadata(
-    title="2024 Growth Strategy",
-    summary="Outlines the company's expansion plan for 2024.",
+    title="2027 Growth Strategy",
+    summary="Outlines the company's expansion plan for 2027.",
     document_type="Company Strategy",
-    time_period="2024",
+    time_period="2027",
     refers_to=["Leadership Team"],
     key_topics=["expansion", "hiring"],
 )
@@ -76,7 +76,7 @@ def client(fake_r2: FakeR2, stub_llm: StubLLM) -> TestClient:
     app.dependency_overrides.clear()
 
 
-def _upload(client: TestClient, name: str = "strategy.md", body: bytes = b"# Strategy\nGrow in 2024."):
+def _upload(client: TestClient, name: str = "strategy.md", body: bytes = b"# Strategy\nGrow in 2027."):
     return client.post(
         "/api/documents", files={"file": (name, body, "text/markdown")}
     )
@@ -92,7 +92,7 @@ def test_upload_infers_and_stores(client: TestClient, fake_r2: FakeR2, stub_llm:
 
     body = response.json()
     assert body["filename"] == "strategy.md"
-    assert body["metadata"]["title"] == "2024 Growth Strategy"
+    assert body["metadata"]["title"] == "2027 Growth Strategy"
     assert stub_llm.calls == 1
     # Both the text and metadata objects were persisted.
     assert body["id"] in fake_r2.metadata
