@@ -28,7 +28,7 @@ Open **http://localhost:3000**. The frontend (nginx) proxies `/api` to the backe
 
 ### Option B — run the two services directly
 
-**Backend** (Python 3.11):
+**Backend** (Python 3.13):
 
 ```bash
 cd backend
@@ -38,7 +38,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
-**Frontend** (Node 20):
+**Frontend** (Node 24):
 
 ```bash
 cd frontend
