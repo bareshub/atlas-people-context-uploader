@@ -11,7 +11,7 @@ variable "cloudflare_api_token" {
 
 variable "bucket_name" {
   type        = string
-  default     = "atlas-context-uploader"
+  default     = "atlas-people-context-uploader"
   description = "Name of the R2 bucket used to store uploaded documents and inferred metadata."
 }
 

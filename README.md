@@ -1,4 +1,4 @@
-# Atlas Context Uploader
+# Atlas People Context Uploader
 
 A small full-stack feature for uploading organisational context documents. A user
 drops in a plain-text or Markdown file; the backend stores it in Cloudflare R2,

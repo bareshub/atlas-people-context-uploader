@@ -13,7 +13,7 @@ from services.r2_client import R2Client
 
 ALLOWED_EXTENSIONS = {".txt", ".md", ".markdown"}
 
-app = FastAPI(title="Atlas Context Uploader", version="1.0.0")
+app = FastAPI(title="Atlas People Context Uploader", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
